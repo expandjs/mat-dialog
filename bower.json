@@ -1,8 +1,8 @@
 {
   "name": "mat-dialog",
   "license": "BSD-3-Clause",
-  "version": "0.8.4",
-  "description": "This element is used to display a material dialog.",
+  "version": "0.8.5",
+  "description": "A custom element used to display a Material Design dialog",
   "homepage": "http://www.expandjs.com/elements/mat-dialog",
   "authors": [
     "Giuliano Rullo <g.rullo@expandjs.com>",
