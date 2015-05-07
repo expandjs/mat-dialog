@@ -319,7 +319,7 @@ This element is used to display a material dialog.
             handleActivate: function (event) {
                 var self = this;
                 if (!XP.includes(self.actions, event.detail.firer)) { return; }
-                XP.requestAnimationFrame(function () { return !event.defaultPrevented && self.hide(); });
+                XP.delay(function () { return !event.defaultPrevented && self.hide(); });
             }
         });
     </script>
