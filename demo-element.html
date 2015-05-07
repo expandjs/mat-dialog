@@ -3,25 +3,25 @@
 <link rel="import" href="../mat-raised-button/mat-raised-button.html">
 <link rel="import" href="mat-dialog.html">
 
-<polymer-element name="mat-dialog-demo" noscript>
+<polymer-element name="mat-dialog-demo">
 
     <template>
         <mat-demo label="mat-dialog">
 
             <div class="demo-title">Default</div>
-            <mat-raised-button label="Show dialog" target="dialogDefault"></mat-raised-button>
+            <mat-raised-button label="Show dialog" target="dialogDefault" on-xp-activate="{{handleActivate}}"></mat-raised-button>
             <mat-dialog id="dialogDefault" label="Default">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dignissim vestibulum purus vel pulvinar. Donec cursus malesuada sem eget placerat. Maecenas et lobortis ex. Proin tincidunt, nunc at euismod condimentum, justo est ultrices arcu, non interdum mi sem eget velit. Morbi laoreet, nibh at luctus ornare, enim risus tincidunt sapien, ac hendrerit purus ipsum sed justo. Etiam sagittis dolor neque, vitae congue purus ornare eget. Aenean non enim ex. Sed porta dignissim efficitur. Nullam sagittis justo turpis, dapibus volutpat nulla luctus non. Suspendisse nec sagittis mauris. Suspendisse ut velit quis elit dapibus viverra. Duis eget orci eros. Vivamus scelerisque blandit magna at auctor.
             </mat-dialog>
 
             <div class="demo-title">Backdrop disabled</div>
-            <mat-raised-button label="Show dialog" target="dialogBackdrop"></mat-raised-button>
+            <mat-raised-button label="Show dialog" target="dialogBackdrop" on-xp-activate="{{handleActivate}}"></mat-raised-button>
             <mat-dialog id="dialogBackdrop" label="Backdrop disabled" backdropDisabled>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dignissim vestibulum purus vel pulvinar. Donec cursus malesuada sem eget placerat. Maecenas et lobortis ex. Proin tincidunt, nunc at euismod condimentum, justo est ultrices arcu, non interdum mi sem eget velit. Morbi laoreet, nibh at luctus ornare, enim risus tincidunt sapien, ac hendrerit purus ipsum sed justo. Etiam sagittis dolor neque, vitae congue purus ornare eget. Aenean non enim ex. Sed porta dignissim efficitur. Nullam sagittis justo turpis, dapibus volutpat nulla luctus non. Suspendisse nec sagittis mauris. Suspendisse ut velit quis elit dapibus viverra. Duis eget orci eros. Vivamus scelerisque blandit magna at auctor.
             </mat-dialog>
 
             <div class="demo-title">Actions</div>
-            <mat-raised-button label="Show dialog" target="actionDialog"></mat-raised-button>
+            <mat-raised-button label="Show dialog" target="actionDialog" on-xp-activate="{{handleActivate}}"></mat-raised-button>
             <mat-dialog id="actionDialog" label="Actions">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dignissim vestibulum purus vel pulvinar. Donec cursus malesuada sem eget placerat. Maecenas et lobortis ex. Proin tincidunt, nunc at euismod condimentum, justo est ultrices arcu, non interdum mi sem eget velit. Morbi laoreet, nibh at luctus ornare, enim risus tincidunt sapien, ac hendrerit purus ipsum sed justo. Etiam sagittis dolor neque, vitae congue purus ornare eget. Aenean non enim ex. Sed porta dignissim efficitur. Nullam sagittis justo turpis, dapibus volutpat nulla luctus non. Suspendisse nec sagittis mauris. Suspendisse ut velit quis elit dapibus viverra. Duis eget orci eros. Vivamus scelerisque blandit magna at auctor.
                 <mat-button label="More info" more></mat-button>
@@ -30,14 +30,14 @@
             </mat-dialog>
 
             <div class="demo-title">Fixed dimensions</div>
-            <mat-raised-button label="Show dialog" target="dialogFixed"></mat-raised-button>
+            <mat-raised-button label="Show dialog" target="dialogFixed" on-xp-activate="{{handleActivate}}"></mat-raised-button>
             <mat-dialog id="dialogFixed" label="Fixed dimensions" width="320" height="240">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dignissim vestibulum purus vel pulvinar. Donec cursus malesuada sem eget placerat. Maecenas et lobortis ex. Proin tincidunt, nunc at euismod condimentum, justo est ultrices arcu, non interdum mi sem eget velit. Morbi laoreet, nibh at luctus ornare, enim risus tincidunt sapien, ac hendrerit purus ipsum sed justo. Etiam sagittis dolor neque, vitae congue purus ornare eget. Aenean non enim ex. Sed porta dignissim efficitur. Nullam sagittis justo turpis, dapibus volutpat nulla luctus non. Suspendisse nec sagittis mauris. Suspendisse ut velit quis elit dapibus viverra. Duis eget orci eros. Vivamus scelerisque blandit magna at auctor.
                 <mat-button label="Close" action></mat-button>
             </mat-dialog>
 
             <div class="demo-title">Fullscreen</div>
-            <mat-raised-button label="Show dialog" target="dialogFullscreen"></mat-raised-button>
+            <mat-raised-button label="Show dialog" target="dialogFullscreen" on-xp-activate="{{handleActivate}}"></mat-raised-button>
             <mat-dialog id="dialogFullscreen" label="Fullscreen" fullScreen>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dignissim vestibulum purus vel pulvinar. Donec cursus malesuada sem eget placerat. Maecenas et lobortis ex. Proin tincidunt, nunc at euismod condimentum, justo est ultrices arcu, non interdum mi sem eget velit. Morbi laoreet, nibh at luctus ornare, enim risus tincidunt sapien, ac hendrerit purus ipsum sed justo. Etiam sagittis dolor neque, vitae congue purus ornare eget. Aenean non enim ex. Sed porta dignissim efficitur. Nullam sagittis justo turpis, dapibus volutpat nulla luctus non. Suspendisse nec sagittis mauris. Suspendisse ut velit quis elit dapibus viverra. Duis eget orci eros. Vivamus scelerisque blandit magna at auctor.
                 <mat-button label="Close" action></mat-button>
@@ -45,5 +45,13 @@
 
         </mat-demo>
     </template>
+
+    <script>
+        XPElement({
+
+            // HANDLERS
+            handleActivate: function (event) { event.detail.target.toggle(); }
+        });
+    </script>
 
 </polymer-element>
