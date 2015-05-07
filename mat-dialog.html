@@ -31,7 +31,7 @@ This element is used to display a material dialog.
 <link rel="import" href="../mat-divider/mat-divider.html">
 <link rel="import" href="../xp-dialog/xp-dialog.html">
 
-<polymer-element name="mat-dialog" constructor="MATDialogElement" attributes="autoHideDisabled backdropDisabled background data emptyActions emptyLabel fullScreen label height scrollable showed target width">
+<polymer-element name="mat-dialog" constructor="MATDialogElement" attributes="autoHideDisabled backdropDisabled background data emptyActions emptyLabel fullScreen label height scrollable showed width">
 
     <template>
         <style>
@@ -75,7 +75,7 @@ This element is used to display a material dialog.
                 position: relative;
             }
         </style>
-        <xp-dialog context="{{}}" id="matDialogAdaptee" autoHideDisabled="{{autoHideDisabled}}" backdropDisabled="{{backdropDisabled}}" data="{{data}}" fullScreen="{{fullScreen}}" height="{{height}}" showed="{{showed}}" target="{{target}}" width="{{width}}">
+        <xp-dialog context="{{}}" id="matDialogAdaptee" autoHideDisabled="{{autoHideDisabled}}" backdropDisabled="{{backdropDisabled}}" fullScreen="{{fullScreen}}" height="{{height}}" showed="{{showed}}" width="{{width}}">
             <mat-paper id="matDialogWrapper" background="{{background}}" z="[[3]]" vertical layout>
                 <div id="matDialogActions" hidden?="{{emptyActions}}" on-xp-activate="{{handleActivate}}" horizontal layout center>
                     <mat-divider id="matDialogDivider" hidden?="{{!scrollable}}" cap></mat-divider>
@@ -110,13 +110,11 @@ This element is used to display a material dialog.
              * Shows the dialog.
              *
              * @method show
-             * @param {Element | string} target
-             * @param {*} [data]
              * @returns {Element}
              */
-            show: function (target, data) {
+            show: function () {
                 var self = this;
-                self.$.matDialogAdaptee.show(target, data);
+                self.$.matDialogAdaptee.show();
                 return self;
             },
 
@@ -124,13 +122,11 @@ This element is used to display a material dialog.
              * Toggles the dialog.
              *
              * @method toggle
-             * @param {Element | string} target
-             * @param {*} [data]
              * @returns {Element}
              */
-            toggle: function (target, data) {
+            toggle: function () {
                 var self = this;
-                self.$.matDialogAdaptee.toggle(target, data);
+                self.$.matDialogAdaptee.toggle();
                 return self;
             },
 
@@ -245,14 +241,6 @@ This element is used to display a material dialog.
                  * @default false
                  */
                 showed: {reflect: true, value: false},
-
-                /**
-                 * The `id` of the targeted element or the element itself.
-                 *
-                 * @attribute target
-                 * @type Element | string
-                 */
-                target: {reflect: false, value: null},
 
                 /**
                  * The dialog's width. If `0` the dialog will resize itself based on it's content.
