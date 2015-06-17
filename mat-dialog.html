@@ -1,0 +1,439 @@
+<!--
+@license
+Copyright (c) 2015 The ExpandJS authors. All rights reserved.
+This code may only be used under the BSD style license found at https://expandjs.github.io/LICENSE.txt
+The complete set of authors may be found at https://expandjs.github.io/AUTHORS.txt
+The complete set of contributors may be found at https://expandjs.github.io/CONTRIBUTORS.txt
+-->
+
+<!--
+This element is used to display a material dialog.
+
+@element mat-dialog
+@description A custom element used to display a Material Design dialog
+@keywords material design, material dialog, web app, html5, expandjs, web-components
+@group containers
+@homepage http://expandjs.com/elements/mat-dialog
+@demo http://expandjs.com/demo/mat-dialog
+
+@dependency polymer Polymer/polymer
+@dependency expandjs ExpandJS/expandjs
+@dependency iron-flex-layout PolymerElements/iron-flex-layout
+@dependency mat-divider ExpandJS/mat-divider
+@dependency mat-paper ExpandJS/mat-paper
+@dependency xp-array-behavior ExpandJS/xp-array-behavior
+@dependency xp-dialog ExpandJS/xp-dialog
+
+@devDependency mat-button ExpandJS/mat-button
+@devDependency mat-demo ExpandJS/mat-demo
+@devDependency mat-raised-button ExpandJS/mat-raised-button
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../expandjs/expandjs.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../mat-divider/mat-divider.html">
+<link rel="import" href="../mat-paper/mat-paper.html">
+<link rel="import" href="../xp-array-behavior/xp-array-behavior.html">
+<link rel="import" href="../xp-dialog/xp-dialog.html">
+
+<dom-module id="mat-dialog">
+
+    <style>
+        :host {
+            display: block;
+            overflow: visible;
+            position: absolute;
+        }
+
+        :host #matDialogAdaptee {
+            margin: 24px 40px;
+        }
+
+        :host #matDialogAdaptee::shadow > #xpDialogWrapper {
+            overflow: visible;
+        }
+
+        :host #matDialogWrapper {
+            @apply(--layout-vertical);
+            border-radius: inherit;
+            height: 100%;
+            overflow: visible;
+        }
+
+        :host #matDialogBody {
+            -ms-flex-order: 1;
+            -webkit-order: 1;
+            order: 1;
+            overflow: auto;
+            padding: 24px;
+        }
+
+        :host(:not([empty-actions])) #matDialogBody {
+            padding-bottom: 16px;
+        }
+
+        :host #matDialogLabel {
+            @apply(--mat-font-headline);
+            margin: -4px 0 12px 0;
+        }
+
+        :host([empty-label]) #matDialogLabel {
+            display: none !important;
+        }
+
+        :host #matDialogActions {
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+            min-height: 48px;
+            -ms-flex-order: 2;
+            -webkit-order: 2;
+            order: 2;
+            padding: 0 12px;
+            position: relative;
+        }
+
+        :host([empty-actions]) #matDialogActions {
+            display: none !important;
+        }
+
+        :host(:not([scrollable])) #matDialogDivider {
+            display: none !important;
+        }
+    </style>
+
+    <template>
+        <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" backdrop-disabled="[[backdropDisabled]]" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
+            <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
+                <div id="matDialogActions" on-xp-activate="_handleActivate">
+                    <mat-divider id="matDialogDivider" cap></mat-divider>
+                    <content id="moreContent" select="[more]"></content>
+                    <div flex></div>
+                    <content id="actionsContent" select="[action]"></content>
+                </div>
+                <div id="matDialogBody">
+                    <div id="matDialogLabel">{{label}}</div>
+                    <content id="bodyContent"></content>
+                </div>
+            </mat-paper>
+        </xp-dialog>
+    </template>
+
+    <script>
+        Polymer({
+
+            // ELEMENT
+            is: 'mat-dialog',
+
+            // BEHAVIORS
+            behaviors: [
+                Polymer.XPArrayBehavior
+            ],
+
+            /*********************************************************************/
+
+            /**
+             * Hides the dialog.
+             *
+             * @method hide
+             * @returns {Element}
+             */
+            hide: function () {
+                var self = this;
+                self.$.matDialogAdaptee.hide();
+                return self;
+            },
+
+            /**
+             * Shows the dialog.
+             *
+             * @method show
+             * @returns {Element}
+             */
+            show: function () {
+                var self = this;
+                self.$.matDialogAdaptee.show();
+                return self;
+            },
+
+            /**
+             * Toggles the dialog.
+             *
+             * @method toggle
+             * @returns {Element}
+             */
+            toggle: function () {
+                var self = this;
+                self.$.matDialogAdaptee.toggle();
+                return self;
+            },
+
+            /*********************************************************************/
+
+            // PROPERTIES
+            properties: {
+
+                /**
+                 * The list of actions.
+                 *
+                 * @attribute actions
+                 * @type Array
+                 * @notify
+                 * @readonly
+                 */
+                actions: {
+                    notify: true,
+                    readOnly: true,
+                    type: Array,
+                    value: function () { return []; }
+                },
+
+                /**
+                 * If set to true, the dialog will not close clicking outside.
+                 *
+                 * @attribute auto-hide-disabled
+                 * @type boolean
+                 * @default false
+                 */
+                autoHideDisabled: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the backdrop is transparent.
+                 *
+                 * @attribute backdrop-disabled
+                 * @type boolean
+                 * @default false
+                 */
+                backdropDisabled: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The paper's background color.
+                 *
+                 * @attribute background
+                 * @type string
+                 */
+                background: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: null
+                },
+
+                /**
+                 * The element's data.
+                 *
+                 * @attribute data
+                 * @type *
+                 * @notifies
+                 */
+                data: {
+                    notify: true,
+                    value: null
+                },
+
+                /**
+                 * Used internally as a check if the actions need to be shown or not
+                 *
+                 * @attribute empty-actions
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                emptyActions: {
+                    computed: '_computeEmptyActions(actions, more)',
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * If set to true, the label is hidden.
+                 *
+                 * @attribute empty-label
+                 * @type boolean
+                 * @notifies
+                 * @readonly
+                 */
+                emptyLabel: {
+                    computed: '_computeEmptyLabel(label)',
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean
+                },
+
+                /**
+                 * If set to true, the dialog is full screen.
+                 *
+                 * @attribute full-screen
+                 * @type boolean
+                 * @default false
+                 */
+                fullScreen: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The dialog's height. If `0` the dialog will resize itself based on it's content.
+                 *
+                 * @attribute height
+                 * @type number
+                 */
+                height: {
+                    reflectToAttribute: true,
+                    type: Number,
+                    value: null
+                },
+
+                /**
+                 * The dialog's label
+                 *
+                 * @attribute label
+                 * @type string
+                 */
+                label: {
+                    reflectToAttribute: true,
+                    type: String,
+                    value: null
+                },
+
+                /**
+                 * The list of more.
+                 *
+                 * @attribute more
+                 * @type Array
+                 * @notifies
+                 * @readonly
+                 */
+                more: {
+                    notify: true,
+                    readOnly: true,
+                    type: Array,
+                    value: function () { return []; }
+                },
+
+                /**
+                 * If set to true, the dialog body is scrollable.
+                 *
+                 * @property scrollable
+                 * @type boolean
+                 * @default false
+                 * @notifies
+                 * @readonly
+                 */
+                scrollable: {
+                    notify: true,
+                    readOnly: true,
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the dialog is showed.
+                 *
+                 * @attribute showed
+                 * @type boolean
+                 * @default false
+                 * @notifies
+                 */
+                showed: {
+                    notify: true,
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * The dialog's width. If `0` the dialog will resize itself based on it's content.
+                 *
+                 * @attribute width
+                 * @type number
+                 */
+                width: {
+                    reflectToAttribute: true,
+                    type: Number,
+                    value: null
+                }
+            },
+
+            /*********************************************************************/
+
+            // COMPUTER
+            _computeEmptyActions: function (actions, more) {
+                return !actions.length && !more.length;
+            },
+
+            // COMPUTER
+            _computeEmptyLabel: function (label) {
+                return !label;
+            },
+
+            /*********************************************************************/
+
+            // LISTENER
+            attached: function () {
+
+                // Vars
+                var self = this;
+
+                // Mutating
+                self.mutated();
+
+                // Scrolling
+                self.scrolling();
+            },
+
+            // LISTENER
+            mutated: function () {
+
+                // Vars
+                var self = this;
+
+                // Setting
+                self.overwrite('actions', XP.getDistributedElements(Polymer.dom(self.$.actionsContent)));
+                self.overwrite('more', XP.getDistributedElements(Polymer.dom(self.$.moreContent)));
+
+                // Observing
+                XP.onMutation(self, self.mutated.bind(self));
+            },
+
+            // LISTENER
+            scrolling: function () {
+
+                // Vars
+                var self = this;
+
+                // Setting
+                self._setScrollable(self.$.matDialogBody.clientHeight < self.$.matDialogBody.scrollHeight);
+
+                // Observing
+                XP.onMutation(self, self.scrolling.bind(self), {attributes: true, characterData: true, childList: true, subtree: true});
+            },
+
+            /*********************************************************************/
+
+            // HANDLER
+            _handleActivate: function (event) {
+
+                // Vars
+                var self = this;
+
+                // Checking
+                if (!XP.includes(self.actions, event.detail.firer)) { return; }
+
+                // Hiding
+                XP.delay(function () { return !event.defaultPrevented && self.hide(); });
+            }
+        });
+    </script>
+
+</dom-module>

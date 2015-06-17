@@ -1,0 +1,40 @@
+{
+  "name": "mat-dialog",
+  "license": "BSD-3-Clause",
+  "version": "0.9.0",
+  "description": "A custom element used to display a Material Design dialog",
+  "homepage": "http://expandjs.com/elements/mat-dialog",
+  "authors": [
+    "Giuliano Rullo <g.rullo@expandjs.com>",
+    "Maurizio Stefàno <m.stefano@expandjs.com>",
+    "Robert Manolea <r.manolea@expandjs.com>"
+  ],
+  "keywords": [
+    "material design",
+    "material dialog",
+    "web app",
+    "html5",
+    "expandjs",
+    "web-components"
+  ],
+  "main": [
+    "mat-dialog.html"
+  ],
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "expandjs": "ExpandJS/expandjs",
+    "mat-divider": "ExpandJS/mat-divider",
+    "mat-paper": "ExpandJS/mat-paper",
+    "xp-array-behavior": "ExpandJS/xp-array-behavior",
+    "xp-dialog": "ExpandJS/xp-dialog",
+    "polymer": "Polymer/polymer",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout"
+  },
+  "devDependencies": {
+    "mat-button": "ExpandJS/mat-button",
+    "mat-demo": "ExpandJS/mat-demo",
+    "mat-raised-button": "ExpandJS/mat-raised-button"
+  }
+}
