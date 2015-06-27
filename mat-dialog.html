@@ -17,16 +17,15 @@ This element is used to display a material dialog.
 @demo http://expandjs.com/demo/mat-dialog
 
 @dependency polymer Polymer/polymer#^1.0.0
-@dependency expandjs ExpandJS/expandjs#0.9.1
+@dependency expandjs ExpandJS/expandjs#0.9.2
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency mat-divider ExpandJS/mat-divider#0.9.1
-@dependency mat-paper ExpandJS/mat-paper#0.9.1
-@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.1
-@dependency xp-dialog ExpandJS/xp-dialog#0.9.1
+@dependency mat-divider ExpandJS/mat-divider#0.9.2
+@dependency mat-paper ExpandJS/mat-paper#0.9.2
+@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.2
+@dependency xp-dialog ExpandJS/xp-dialog#0.9.2
 
-@devDependency mat-button ExpandJS/mat-button#0.9.1
-@devDependency mat-demo ExpandJS/mat-demo#0.9.1
-@devDependency mat-raised-button ExpandJS/mat-raised-button#0.9.1
+@devDependency mat-button ExpandJS/mat-button#0.9.2
+@devDependency mat-demo ExpandJS/mat-demo#0.9.2
 -->
 
 <link rel="import" href="../polymer/polymer.html">
@@ -100,15 +99,19 @@ This element is used to display a material dialog.
         :host(:not([scrollable])) #matDialogDivider {
             display: none !important;
         }
+
+        :host #matDialogSpacer {
+            @apply(--layout-flex);
+        }
     </style>
 
     <template>
         <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" backdrop-disabled="[[backdropDisabled]]" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
-            <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
+            <mat-paper id="matDialogWrapper" background="[[background]]" theme="{{theme}}" z="24">
                 <div id="matDialogActions" on-xp-activate="_handleActivate">
                     <mat-divider id="matDialogDivider" cap></mat-divider>
                     <content id="moreContent" select="[more]"></content>
-                    <div flex></div>
+                    <div id="matDialogSpacer"></div>
                     <content id="actionsContent" select="[action]"></content>
                 </div>
                 <div id="matDialogBody">
@@ -324,7 +327,7 @@ This element is used to display a material dialog.
                 /**
                  * If set to true, the dialog body is scrollable.
                  *
-                 * @property scrollable
+                 * @attribute scrollable
                  * @type boolean
                  * @default false
                  * @notifies
@@ -351,6 +354,18 @@ This element is used to display a material dialog.
                     reflectToAttribute: true,
                     type: Boolean,
                     value: false
+                },
+
+                /**
+                 * The paper's theme, used to apply the default foreground color.
+                 *
+                 * @attribute theme
+                 * @type String
+                 * @notifies
+                 */
+                theme: {
+                    notify: true,
+                    type: String
                 },
 
                 /**
