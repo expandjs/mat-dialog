@@ -113,13 +113,13 @@ This element is used to display a material dialog.
             <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
                 <div id="matDialogBody">
                     <div id="matDialogLabel">{{label}}</div>
-                    <content id="bodyContent" select=":not([more]):not([action])"></content>
+                    <content id="bodyContent" select=':not([more=""]):not([action=""])'></content>
                 </div>
                 <div id="matDialogActions" on-xp-activate="_handleActivate">
                     <mat-divider id="matDialogDivider" cap></mat-divider>
-                    <content id="moreContent" select="[more]"></content>
+                    <content id="moreContent" select='[more=""]'></content>
                     <div id="matDialogSpacer"></div>
-                    <content id="actionsContent" select="[action]"></content>
+                    <content id="actionsContent" select='[action=""]'></content>
                 </div>
             </mat-paper>
         </xp-dialog>
