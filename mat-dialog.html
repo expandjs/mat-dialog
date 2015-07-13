@@ -16,18 +16,23 @@ This element is used to display a material dialog.
 @homepage http://expandjs.com/elements/mat-dialog
 @demo http://expandjs.com/demo/mat-dialog
 
-@wraps xp-dialog http://expandjs.com/elements/-dialog
+@wraps xp-dialog http://expandjs.com/elements/xp-dialog
+@behavior xp-adapter-behavior http://expandjs.com/elements/xp-adapter-behavior
+@behavior xp-array-behavior http://expandjs.com/elements/xp-array-behavior
+@behavior xp-referral-behavior http://expandjs.com/elements/xp-referral-behavior
 
 @dependency polymer Polymer/polymer#^1.0.0
-@dependency expandjs ExpandJS/expandjs#0.9.3
+@dependency expandjs ExpandJS/expandjs#0.9.4
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency mat-divider ExpandJS/mat-divider#0.9.3
-@dependency mat-paper ExpandJS/mat-paper#0.9.3
-@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.3
-@dependency xp-dialog ExpandJS/xp-dialog#0.9.3
+@dependency mat-divider ExpandJS/mat-divider#0.9.4
+@dependency mat-paper ExpandJS/mat-paper#0.9.4
+@dependency xp-adapter-behavior ExpandJS/xp-adapter-behavior#0.9.4
+@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.4
+@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.4
+@dependency xp-dialog ExpandJS/xp-dialog#0.9.4
 
-@devDependency mat-button ExpandJS/mat-button#0.9.3
-@devDependency mat-demo ExpandJS/mat-demo#0.9.3
+@devDependency mat-button ExpandJS/mat-button#0.9.4
+@devDependency mat-demo ExpandJS/mat-demo#0.9.4
 -->
 
 <link rel="import" href="../polymer/polymer.html">
@@ -35,7 +40,9 @@ This element is used to display a material dialog.
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../mat-divider/mat-divider.html">
 <link rel="import" href="../mat-paper/mat-paper.html">
+<link rel="import" href="../xp-adapter-behavior/xp-adapter-behavior.html">
 <link rel="import" href="../xp-array-behavior/xp-array-behavior.html">
+<link rel="import" href="../xp-referral-behavior/xp-referral-behavior.html">
 <link rel="import" href="../xp-dialog/xp-dialog.html">
 
 <dom-module id="mat-dialog">
@@ -63,9 +70,6 @@ This element is used to display a material dialog.
         }
 
         :host #matDialogBody {
-            -ms-flex-order: 1;
-            -webkit-order: 1;
-            order: 1;
             overflow: auto;
             padding: 24px;
         }
@@ -87,9 +91,6 @@ This element is used to display a material dialog.
             @apply(--layout-horizontal);
             @apply(--layout-center);
             min-height: 48px;
-            -ms-flex-order: 2;
-            -webkit-order: 2;
-            order: 2;
             padding: 0 12px;
             position: relative;
         }
@@ -108,17 +109,17 @@ This element is used to display a material dialog.
     </style>
 
     <template>
-        <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" backdrop-disabled="[[backdropDisabled]]" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
+        <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" auto-reset-disabled="[[autoResetDisabled]]" backdrop-disabled="[[backdropDisabled]]" context="[[self]]" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
             <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
+                <div id="matDialogBody">
+                    <div id="matDialogLabel">{{label}}</div>
+                    <content id="bodyContent" select=":not([more]):not([action])"></content>
+                </div>
                 <div id="matDialogActions" on-xp-activate="_handleActivate">
                     <mat-divider id="matDialogDivider" cap></mat-divider>
                     <content id="moreContent" select="[more]"></content>
                     <div id="matDialogSpacer"></div>
                     <content id="actionsContent" select="[action]"></content>
-                </div>
-                <div id="matDialogBody">
-                    <div id="matDialogLabel">{{label}}</div>
-                    <content id="bodyContent"></content>
                 </div>
             </mat-paper>
         </xp-dialog>
@@ -132,7 +133,9 @@ This element is used to display a material dialog.
 
             // BEHAVIORS
             behaviors: [
-                Polymer.XPArrayBehavior
+                Polymer.XPAdapterBehavior,
+                Polymer.XPArrayBehavior,
+                Polymer.XPReferralBehavior
             ],
 
             /*********************************************************************/
@@ -153,11 +156,13 @@ This element is used to display a material dialog.
              * Shows the dialog.
              *
              * @method show
+             * @param {Element | string} [target]
+             * @param {*} [data]
              * @returns {Element}
              */
-            show: function () {
+            show: function (target, data) {
                 var self = this;
-                self.$.matDialogAdaptee.show();
+                self.$.matDialogAdaptee.show(target, data);
                 return self;
             },
 
@@ -165,11 +170,13 @@ This element is used to display a material dialog.
              * Toggles the dialog.
              *
              * @method toggle
+             * @param {Element | string} [target]
+             * @param {*} [data]
              * @returns {Element}
              */
-            toggle: function () {
+            toggle: function (target, data) {
                 var self = this;
-                self.$.matDialogAdaptee.toggle();
+                self.$.matDialogAdaptee.toggle(target, data);
                 return self;
             },
 
@@ -201,6 +208,19 @@ This element is used to display a material dialog.
                  * @default false
                  */
                 autoHideDisabled: {
+                    reflectToAttribute: true,
+                    type: Boolean,
+                    value: false
+                },
+
+                /**
+                 * If set to true, the dialog's forms will not reset when showed.
+                 *
+                 * @attribute auto-reset-disabled
+                 * @type boolean
+                 * @default false
+                 */
+                autoResetDisabled: {
                     reflectToAttribute: true,
                     type: Boolean,
                     value: false
@@ -408,6 +428,16 @@ This element is used to display a material dialog.
 
                 // Observing
                 XP.onMutation(self, self.mutated.bind(self));
+            },
+
+            // LISTENER
+            ready: function () {
+
+                // Vars
+                var self = this;
+
+                // Adapting
+                self._adapt(self.$.matDialogAdaptee);
             },
 
             // LISTENER
