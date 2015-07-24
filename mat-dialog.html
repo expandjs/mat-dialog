@@ -7,7 +7,45 @@ The complete set of contributors may be found at https://expandjs.github.io/CONT
 -->
 
 <!--
-This element is used to display a material dialog.
+An element used to display a [Material Design dialog](http://www.google.com/design/spec/components/dialogs.html).
+
+It can be used to create [simple alerts](http://www.google.com/design/spec/components/dialogs.html#dialogs-alerts),
+[confirmation dialogs](http://www.google.com/design/spec/components/dialogs.html#dialogs-confirmation-dialogs)
+and [full screen dialogs](http://www.google.com/design/spec/components/dialogs.html#dialogs-full-screen-dialogs).
+
+```html
+<mat-dialog backdrop-disabled>
+    <div>This is an alert</div>
+    <mat-button label="OK" action></mat-button>
+</mat-dialog>
+```
+
+To create a confirmation dialog which requires a response from the user to close itself, you can set
+`auto-hide-disabled` and it will only close when the user interacts with the given actions.
+
+```html
+<mat-dialog label="Accept or decline" auto-hide-disabled>
+    <div>This is a confirmation dialog</div>
+    <mat-button label="Cancel" action></mat-button>
+    <mat-button label="Confirm" action></mat-button>
+</mat-dialog>
+```
+
+The dialog can also cover the whole screen, creating the illusion of a new page.
+
+```html
+<mat-dialog id="myDialog" full-screen>
+    <mat-header-panel>
+        <mat-header>
+            <mat-icon-button icon="navigation:arrow-back" target="myDialog" toggles-target></mat-icon-button>
+            <span>Header</span>
+        </mat-header>
+        <mat-content>
+            <p>This is a full screen dialog.</p>
+        </mat-content>
+    </mat-header-panel>
+</mat-dialog>
+```
 
 @element mat-dialog
 @description A custom element used to display a Material Design dialog
@@ -16,23 +54,23 @@ This element is used to display a material dialog.
 @homepage http://expandjs.com/elements/mat-dialog
 @demo http://expandjs.com/demo/mat-dialog
 
-@wraps xp-dialog http://expandjs.com/elements/xp-dialog
-@behavior xp-adapter-behavior http://expandjs.com/elements/xp-adapter-behavior
-@behavior xp-array-behavior http://expandjs.com/elements/xp-array-behavior
-@behavior xp-referral-behavior http://expandjs.com/elements/xp-referral-behavior
+@adapts xp-dialog /bower_components/xp-dialog/xp-dialog.html
+@behavior xp-adapter-behavior /bower_components/xp-adapter-behavior/xp-adapter-behavior.html
+@behavior xp-array-behavior /bower_components/xp-array-behavior/xp-array-behavior.html
+@behavior xp-referral-behavior /bower_components/xp-referral-behavior/xp-referral-behavior.html
 
 @dependency polymer Polymer/polymer#^1.0.0
-@dependency expandjs ExpandJS/expandjs#0.9.4
+@dependency expandjs ExpandJS/expandjs#0.9.5
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency mat-divider ExpandJS/mat-divider#0.9.4
-@dependency mat-paper ExpandJS/mat-paper#0.9.4
-@dependency xp-adapter-behavior ExpandJS/xp-adapter-behavior#0.9.4
-@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.4
-@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.4
-@dependency xp-dialog ExpandJS/xp-dialog#0.9.4
+@dependency mat-divider ExpandJS/mat-divider#0.9.5
+@dependency mat-paper ExpandJS/mat-paper#0.9.5
+@dependency xp-adapter-behavior ExpandJS/xp-adapter-behavior#0.9.5
+@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.5
+@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.5
+@dependency xp-dialog ExpandJS/xp-dialog#0.9.5
 
-@devDependency mat-button ExpandJS/mat-button#0.9.4
-@devDependency mat-demo ExpandJS/mat-demo#0.9.4
+@devDependency mat-button ExpandJS/mat-button#0.9.5
+@devDependency mat-demo ExpandJS/mat-demo#0.9.5
 -->
 
 <link rel="import" href="../polymer/polymer.html">
