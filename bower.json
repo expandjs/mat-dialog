@@ -29,7 +29,7 @@
     "xp-array-behavior": "ExpandJS/xp-array-behavior#0.9.8",
     "xp-dialog": "ExpandJS/xp-dialog#0.9.8",
     "xp-referral-behavior": "ExpandJS/xp-referral-behavior#0.9.8",
-    "polymer": "Polymer/polymer#^1.0.0",
+    "polymer": "Polymer/polymer#^1.1.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0"
   },
   "devDependencies": {
