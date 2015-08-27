@@ -86,69 +86,70 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 
 <dom-module id="mat-dialog">
 
-    <style>
-        :host {
-            display: block;
-            overflow: visible;
-            position: absolute;
-        }
-
-        :host #matDialogAdaptee {
-            background: transparent !important;
-            margin: 24px 40px;
-        }
-
-        :host #matDialogAdaptee::shadow > #xpDialogWrapper {
-            overflow: visible;
-        }
-
-        :host #matDialogWrapper {
-            @apply(--layout-vertical);
-            border-radius: inherit;
-            height: 100%;
-            overflow: visible;
-        }
-
-        :host #matDialogBody {
-            overflow: auto;
-            padding: 24px;
-        }
-
-        :host(:not([empty-actions])) #matDialogBody {
-            padding-bottom: 16px;
-        }
-
-        :host #matDialogLabel {
-            @apply(--mat-font-headline);
-            margin: -4px 0 12px 0;
-        }
-
-        :host([empty-label]) #matDialogLabel {
-            display: none !important;
-        }
-
-        :host #matDialogActions {
-            @apply(--layout-horizontal);
-            @apply(--layout-center);
-            min-height: 48px;
-            padding: 0 12px;
-            position: relative;
-        }
-
-        :host([empty-actions]) #matDialogActions {
-            display: none !important;
-        }
-
-        :host(:not([scrollable])) #matDialogDivider {
-            display: none !important;
-        }
-
-        :host #matDialogSpacer {
-            @apply(--layout-flex);
-        }
-    </style>
-
     <template>
+
+        <style>
+            :host {
+                display: block;
+                overflow: visible;
+                position: absolute;
+            }
+
+            :host #matDialogAdaptee {
+                background: transparent !important;
+                margin: 24px 40px;
+            }
+
+            :host #matDialogAdaptee::shadow > #xpDialogWrapper {
+                overflow: visible;
+            }
+
+            :host #matDialogWrapper {
+                @apply(--layout-vertical);
+                border-radius: inherit;
+                height: 100%;
+                overflow: visible;
+            }
+
+            :host #matDialogBody {
+                overflow: auto;
+                padding: 24px;
+            }
+
+            :host(:not([empty-actions])) #matDialogBody {
+                padding-bottom: 16px;
+            }
+
+            :host #matDialogLabel {
+                @apply(--mat-font-headline);
+                margin: -4px 0 12px 0;
+            }
+
+            :host([empty-label]) #matDialogLabel {
+                display: none !important;
+            }
+
+            :host #matDialogActions {
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+                min-height: 48px;
+                padding: 0 12px;
+                position: relative;
+            }
+
+            :host([empty-actions]) #matDialogActions {
+                display: none !important;
+            }
+
+            :host(:not([scrollable])) #matDialogDivider {
+                display: none !important;
+            }
+
+            :host #matDialogSpacer {
+                @apply(--layout-flex);
+            }
+        </style>
+
         <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" auto-reset-disabled="[[autoResetDisabled]]" backdrop-disabled="[[backdropDisabled]]" context="[[self]]" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
             <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
                 <div id="matDialogBody">
@@ -163,6 +164,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 </div>
             </mat-paper>
         </xp-dialog>
+
     </template>
 
     <script>
