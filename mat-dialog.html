@@ -132,13 +132,22 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
             :host #matDialogActions {
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
+                @apply(--layout-end-justified);
                 min-height: 48px;
-                padding: 0 12px;
+                padding: 2px 8px 2px 24px;
                 position: relative;
             }
 
             :host([empty-actions]) #matDialogActions {
                 display: none !important;
+            }
+
+            :host #matDialogActions ::content [action] {
+                display: block;
+            }
+
+            :host #matDialogActions ::content [action] ~ [action] {
+                margin-left: 8px;
             }
 
             :host(:not([scrollable])) #matDialogDivider {
@@ -154,12 +163,10 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
             <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
                 <div id="matDialogBody">
                     <div id="matDialogLabel">{{label}}</div>
-                    <content id="bodyContent" select=':not([more=""]):not([action=""])'></content>
+                    <content id="bodyContent" select=':not([action=""])'></content>
                 </div>
                 <div id="matDialogActions" on-xp-activate="_handleActivate">
                     <mat-divider id="matDialogDivider" cap></mat-divider>
-                    <content id="moreContent" select='[more=""]'></content>
-                    <div id="matDialogSpacer"></div>
                     <content id="actionsContent" select='[action=""]'></content>
                 </div>
             </mat-paper>
@@ -374,21 +381,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 },
 
                 /**
-                 * The list of more.
-                 *
-                 * @attribute more
-                 * @type Array
-                 * @notifies
-                 * @readonly
-                 */
-                more: {
-                    notify: true,
-                    readOnly: true,
-                    type: Array,
-                    value: function () { return []; }
-                },
-
-                /**
                  * If set to true, the dialog body is scrollable.
                  *
                  * @attribute scrollable
@@ -463,10 +455,9 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 
                 // Finding
                 self.overwrite('actions', XP.getDistributedElements(Polymer.dom(self.$.actionsContent)));
-                self.overwrite('more', XP.getDistributedElements(Polymer.dom(self.$.moreContent)));
 
                 // Setting
-                self._setEmptyActions(!self.actions.length && !self.more.length);
+                self._setEmptyActions(!self.actions.length);
 
                 // Observing
                 XP.onMutation(self, self.mutated.bind(self));
