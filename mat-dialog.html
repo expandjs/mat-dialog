@@ -61,17 +61,17 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 @behavior xp-referral-behavior /bower_components/xp-referral-behavior/xp-referral-behavior.html
 
 @dependency polymer Polymer/polymer#^1.1.0
-@dependency expandjs ExpandJS/expandjs#0.9.9
+@dependency expandjs ExpandJS/expandjs#0.9.10
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency mat-divider ExpandJS/mat-divider#0.9.9
-@dependency mat-paper ExpandJS/mat-paper#0.9.9
-@dependency xp-adapter-behavior ExpandJS/xp-adapter-behavior#0.9.9
-@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.9
-@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.9
-@dependency xp-dialog ExpandJS/xp-dialog#0.9.9
+@dependency mat-divider ExpandJS/mat-divider#0.9.10
+@dependency mat-paper ExpandJS/mat-paper#0.9.10
+@dependency xp-adapter-behavior ExpandJS/xp-adapter-behavior#0.9.10
+@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.10
+@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.10
+@dependency xp-dialog ExpandJS/xp-dialog#0.9.10
 
-@devDependency mat-button ExpandJS/mat-button#0.9.9
-@devDependency mat-demo ExpandJS/mat-demo#0.9.9
+@devDependency mat-button ExpandJS/mat-button#0.9.10
+@devDependency mat-demo ExpandJS/mat-demo#0.9.10
 -->
 
 <link rel="import" href="../polymer/polymer.html">
@@ -333,6 +333,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                  *
                  * @attribute empty-label
                  * @type boolean
+                 * @default true
                  * @notifies
                  * @readonly
                  */
@@ -340,7 +341,8 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                     computed: '_computeEmptyLabel(label)',
                     notify: true,
                     reflectToAttribute: true,
-                    type: Boolean
+                    type: Boolean,
+                    value: true
                 },
 
                 /**
