@@ -56,7 +56,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 @demo http://expandjs.com/demo/mat-dialog
 
 @adapts xp-dialog /bower_components/xp-dialog/xp-dialog.html
-@behavior xp-adapter-behavior /bower_components/xp-adapter-behavior/xp-adapter-behavior.html
 @behavior xp-array-behavior /bower_components/xp-array-behavior/xp-array-behavior.html
 @behavior xp-referral-behavior /bower_components/xp-referral-behavior/xp-referral-behavior.html
 
@@ -65,7 +64,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
 @dependency mat-divider ExpandJS/mat-divider#0.9.10
 @dependency mat-paper ExpandJS/mat-paper#0.9.10
-@dependency xp-adapter-behavior ExpandJS/xp-adapter-behavior#0.9.10
 @dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.10
 @dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.10
 @dependency xp-dialog ExpandJS/xp-dialog#0.9.10
@@ -79,7 +77,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../mat-divider/mat-divider.html">
 <link rel="import" href="../mat-paper/mat-paper.html">
-<link rel="import" href="../xp-adapter-behavior/xp-adapter-behavior.html">
 <link rel="import" href="../xp-array-behavior/xp-array-behavior.html">
 <link rel="import" href="../xp-referral-behavior/xp-referral-behavior.html">
 <link rel="import" href="../xp-dialog/xp-dialog.html">
@@ -182,7 +179,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 
             // BEHAVIORS
             behaviors: [
-                Polymer.XPAdapterBehavior,
                 Polymer.XPArrayBehavior,
                 Polymer.XPReferralBehavior
             ],
@@ -197,7 +193,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
              */
             hide: function () {
                 var self = this;
-                self.$.matDialogAdaptee.hide();
+                self.adaptee.hide();
                 return self;
             },
 
@@ -211,7 +207,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
              */
             show: function (target, data) {
                 var self = this;
-                self.$.matDialogAdaptee.show(target, data);
+                self.adaptee.show(target, data);
                 return self;
             },
 
@@ -225,7 +221,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
              */
             toggle: function (target, data) {
                 var self = this;
-                self.$.matDialogAdaptee.toggle(target, data);
+                self.adaptee.toggle(target, data);
                 return self;
             },
 
@@ -247,6 +243,21 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                     readOnly: true,
                     type: Array,
                     value: function () { return []; }
+                },
+
+                /**
+                 * The adapted element.
+                 *
+                 * @attribute adaptee
+                 * @type Element
+                 * @notifies
+                 * @readonly
+                 */
+                adaptee: {
+                    notify: true,
+                    readOnly: true,
+                    type: Object,
+                    value: null
                 },
 
                 /**
@@ -472,7 +483,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 var self = this;
 
                 // Adapting
-                self._adapt(self.$.matDialogAdaptee);
+                self._setAdaptee(self.$.matDialogAdaptee);
             },
 
             // LISTENER
