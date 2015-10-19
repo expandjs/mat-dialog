@@ -37,7 +37,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 <mat-dialog id="myDialog" full-screen>
     <mat-header-panel>
         <mat-header>
-            <mat-icon-button icon="navigation:arrow-back" target="myDialog" toggles-target></mat-icon-button>
+            <mat-icon-button behavior="toggle" icon="navigation:arrow-back" target="myDialog"></mat-icon-button>
             <span>Header</span>
         </mat-header>
         <mat-content>
@@ -60,16 +60,16 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 @behavior xp-referral-behavior /bower_components/xp-referral-behavior/xp-referral-behavior.html
 
 @dependency polymer Polymer/polymer#^1.1.0
-@dependency expandjs ExpandJS/expandjs#0.9.10
+@dependency expandjs ExpandJS/expandjs#0.9.11
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency mat-divider ExpandJS/mat-divider#0.9.10
-@dependency mat-paper ExpandJS/mat-paper#0.9.10
-@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.10
-@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.10
-@dependency xp-dialog ExpandJS/xp-dialog#0.9.10
+@dependency mat-divider ExpandJS/mat-divider#0.9.11
+@dependency mat-paper ExpandJS/mat-paper#0.9.11
+@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.11
+@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.11
+@dependency xp-dialog ExpandJS/xp-dialog#0.9.11
 
-@devDependency mat-button ExpandJS/mat-button#0.9.10
-@devDependency mat-demo ExpandJS/mat-demo#0.9.10
+@devDependency mat-button ExpandJS/mat-button#0.9.11
+@devDependency mat-demo ExpandJS/mat-demo#0.9.11
 -->
 
 <link rel="import" href="../polymer/polymer.html">
@@ -156,7 +156,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
             }
         </style>
 
-        <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" auto-reset-disabled="[[autoResetDisabled]]" backdrop-disabled="[[backdropDisabled]]" context="[[self]]" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
+        <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" auto-reset-disabled="[[autoResetDisabled]]" backdrop-disabled="[[backdropDisabled]]" context="[[self]]" data="{{data}}" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
             <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
                 <div id="matDialogBody">
                     <div id="matDialogLabel">{{label}}</div>
