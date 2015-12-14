@@ -7,16 +7,17 @@ The complete set of contributors may be found at https://expandjs.github.io/CONT
 -->
 
 <!--
-An element used to display a [Material Design dialog](http://www.google.com/design/spec/components/dialogs.html).
+A custom element used to display a [Material Design dialog](http://www.google.com/design/spec/components/dialogs.html).
 
-It can be used to create [simple alerts](http://www.google.com/design/spec/components/dialogs.html#dialogs-alerts),
-[confirmation dialogs](http://www.google.com/design/spec/components/dialogs.html#dialogs-confirmation-dialogs)
-and [full screen dialogs](http://www.google.com/design/spec/components/dialogs.html#dialogs-full-screen-dialogs).
+It can be used to create
+[simple alerts](http://www.google.com/design/spec/components/dialogs.html#dialogs-alerts),
+[confirmation dialogs](http://www.google.com/design/spec/components/dialogs.html#dialogs-confirmation-dialogs) and
+[full screen dialogs](http://www.google.com/design/spec/components/dialogs.html#dialogs-full-screen-dialogs).
 
 ```html
-<mat-dialog backdrop-disabled>
+<mat-dialog id="myDialog" backdrop-disabled>
     <div>This is an alert</div>
-    <mat-button label="OK" action></mat-button>
+    <mat-button behavior="toggle" class="action" label="OK" target="myDialog"></mat-button>
 </mat-dialog>
 ```
 
@@ -24,10 +25,10 @@ To create a confirmation dialog which requires a response from the user to close
 `auto-hide-disabled` and it will only close when the user interacts with the given actions.
 
 ```html
-<mat-dialog label="Accept or decline" auto-hide-disabled>
+<mat-dialog id="myDialog" label="Accept or decline" auto-hide-disabled>
     <div>This is a confirmation dialog</div>
-    <mat-button label="Cancel" action></mat-button>
-    <mat-button label="Confirm" action></mat-button>
+    <mat-button behavior="toggle" class="action" label="Cancel" target="myDialog"></mat-button>
+    <mat-button behavior="toggle" class="action" label="Confirm" target="myDialog"></mat-button>
 </mat-dialog>
 ```
 
@@ -49,84 +50,74 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 
 @element mat-dialog
 @description A custom element used to display a Material Design dialog
-@keywords material design, material dialog, web app, html5, expandjs, web-components
+@keywords material design, material dialog, expandjs, web app, custom elements, web-components
 @group containers
+@hot
+
 @homepage http://expandjs.com/elements/mat-dialog
 @repository https://github.com/ExpandJS/mat-dialog
 @demo http://expandjs.com/demo/mat-dialog
 
-@adapts xp-dialog /bower_components/xp-dialog/xp-dialog.html
+@behavior mat-paper-behavior /bower_components/mat-paper/mat-paper-behavior.html
 @behavior xp-array-behavior /bower_components/xp-array-behavior/xp-array-behavior.html
-@behavior xp-referral-behavior /bower_components/xp-referral-behavior/xp-referral-behavior.html
+@behavior xp-dialog-behavior /bower_components/xp-dialog-behavior/xp-dialog-behavior.html
 
-@dependency polymer Polymer/polymer#^1.1.0
-@dependency expandjs ExpandJS/expandjs#0.9.11
+@dependency polymer Polymer/polymer#^1.2.0
+@dependency expandjs ExpandJS/expandjs#0.10.0
 @dependency iron-flex-layout PolymerElements/iron-flex-layout#^1.0.0
-@dependency mat-divider ExpandJS/mat-divider#0.9.11
-@dependency mat-paper ExpandJS/mat-paper#0.9.11
-@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.9.11
-@dependency xp-referral-behavior ExpandJS/xp-referral-behavior#0.9.11
-@dependency xp-dialog ExpandJS/xp-dialog#0.9.11
+@dependency mat-divider ExpandJS/mat-divider#0.10.0
+@dependency mat-paper ExpandJS/mat-paper#0.10.0
+@dependency mat-typography ExpandJS/mat-typography#0.10.0
+@dependency xp-array-behavior ExpandJS/xp-array-behavior#0.10.0
+@dependency xp-dialog-behavior ExpandJS/xp-dialog-behavior#0.10.0
 
-@devDependency mat-button ExpandJS/mat-button#0.9.11
-@devDependency mat-demo ExpandJS/mat-demo#0.9.11
+@devDependency mat-button ExpandJS/mat-button#0.10.0
+@devDependency mat-demo ExpandJS/mat-demo#0.10.0
 -->
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../expandjs/expandjs.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../mat-divider/mat-divider.html">
-<link rel="import" href="../mat-paper/mat-paper.html">
+<link rel="import" href="../mat-paper/mat-paper-behavior.html">
+<link rel="import" href="../mat-paper/mat-paper-styles.html">
+<link rel="import" href="../mat-typography/mat-typography.html">
 <link rel="import" href="../xp-array-behavior/xp-array-behavior.html">
-<link rel="import" href="../xp-referral-behavior/xp-referral-behavior.html">
-<link rel="import" href="../xp-dialog/xp-dialog.html">
+<link rel="import" href="../xp-dialog-behavior/xp-dialog-behavior.html">
+<link rel="import" href="../xp-dialog-behavior/xp-dialog-styles.html">
 
 <dom-module id="mat-dialog">
 
-    <template>
+    <template strip-whitespace>
+
+        <style include="mat-paper-styles"></style>
+        <style include="xp-dialog-styles"></style>
 
         <style>
-            :host {
-                display: block;
-                overflow: visible;
-                position: absolute;
-            }
-
-            :host #matDialogAdaptee {
-                background: transparent !important;
-                margin: 24px 40px;
-            }
-
-            :host #matDialogAdaptee::shadow > #xpDialogWrapper {
-                overflow: visible;
-            }
-
-            :host #matDialogWrapper {
+            :host .wrapper {
                 @apply(--layout-vertical);
-                border-radius: inherit;
-                height: 100%;
-                overflow: visible;
             }
 
-            :host #matDialogBody {
-                overflow: auto;
+            :host .body {
+                box-sizing: border-box;
                 padding: 24px;
             }
 
-            :host(:not([empty-actions])) #matDialogBody {
+            :host(:not([empty-actions])) .body {
                 padding-bottom: 16px;
             }
 
-            :host #matDialogLabel {
+            :host .label {
                 @apply(--mat-font-headline);
                 margin: -4px 0 12px 0;
             }
 
-            :host([empty-label]) #matDialogLabel {
+            :host([label=""]) .label,
+            :host(:not([label])) .label {
                 display: none !important;
             }
 
-            :host #matDialogActions {
+            :host .actions {
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
                 @apply(--layout-end-justified);
@@ -135,39 +126,34 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 position: relative;
             }
 
-            :host([empty-actions]) #matDialogActions {
+            :host([empty-actions]) .actions,
+            :host(:not([scrollable])) .divider {
                 display: none !important;
             }
 
-            :host #matDialogActions ::content [action] {
+            /* CONTENT */
+
+            :host .actions ::content .action {
                 display: block;
             }
 
-            :host #matDialogActions ::content [action] ~ [action] {
+            :host .actions ::content .action ~ .action {
                 margin-left: 8px;
-            }
-
-            :host(:not([scrollable])) #matDialogDivider {
-                display: none !important;
-            }
-
-            :host #matDialogSpacer {
-                @apply(--layout-flex);
             }
         </style>
 
-        <xp-dialog id="matDialogAdaptee" auto-hide-disabled="[[autoHideDisabled]]" auto-reset-disabled="[[autoResetDisabled]]" backdrop-disabled="[[backdropDisabled]]" context="[[self]]" data="{{data}}" full-screen="[[fullScreen]]" height="[[height]]" showed="{{showed}}" width="[[width]]">
-            <mat-paper id="matDialogWrapper" background="[[background]]" z="24">
-                <div id="matDialogBody">
-                    <div id="matDialogLabel">{{label}}</div>
-                    <content id="bodyContent" select=':not([action=""])'></content>
-                </div>
-                <div id="matDialogActions" on-xp-activate="_handleActivate">
-                    <mat-divider id="matDialogDivider" cap></mat-divider>
-                    <content id="actionsContent" select='[action=""]'></content>
-                </div>
-            </mat-paper>
-        </xp-dialog>
+        <div class="backdrop" on-click="_backdropHandler"></div>
+
+        <div class="wrapper">
+            <div class="body">
+                <div class="label">[[label]]</div>
+                <content select=":not(.action)"></content>
+            </div>
+            <div class="actions">
+                <mat-divider class="divider" cap></mat-divider>
+                <content select=".action"></content>
+            </div>
+        </div>
 
     </template>
 
@@ -179,51 +165,10 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
 
             // BEHAVIORS
             behaviors: [
+                Polymer.MatPaperBehavior,
                 Polymer.XPArrayBehavior,
-                Polymer.XPReferralBehavior
+                Polymer.XPDialogBehavior
             ],
-
-            /*********************************************************************/
-
-            /**
-             * Hides the dialog.
-             *
-             * @method hide
-             * @returns {Element}
-             */
-            hide: function () {
-                var self = this;
-                self.adaptee.hide();
-                return self;
-            },
-
-            /**
-             * Shows the dialog.
-             *
-             * @method show
-             * @param {Element | string} [target]
-             * @param {*} [data]
-             * @returns {Element}
-             */
-            show: function (target, data) {
-                var self = this;
-                self.adaptee.show(target, data);
-                return self;
-            },
-
-            /**
-             * Toggles the dialog.
-             *
-             * @method toggle
-             * @param {Element | string} [target]
-             * @param {*} [data]
-             * @returns {Element}
-             */
-            toggle: function (target, data) {
-                var self = this;
-                self.adaptee.toggle(target, data);
-                return self;
-            },
 
             /*********************************************************************/
 
@@ -241,90 +186,35 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 actions: {
                     notify: true,
                     readOnly: true,
-                    type: Array,
                     value: function () { return []; }
                 },
 
                 /**
-                 * The adapted element.
-                 *
-                 * @attribute adaptee
-                 * @type Element
-                 * @notifies
-                 * @readonly
-                 */
-                adaptee: {
-                    notify: true,
-                    readOnly: true,
-                    type: Object,
-                    value: null
-                },
-
-                /**
-                 * If set to true, the dialog will not close clicking outside.
-                 *
-                 * @attribute auto-hide-disabled
-                 * @type boolean
-                 * @default false
-                 */
-                autoHideDisabled: {
-                    reflectToAttribute: true,
-                    type: Boolean,
-                    value: false
-                },
-
-                /**
-                 * If set to true, the dialog's forms will not reset when showed.
-                 *
-                 * @attribute auto-reset-disabled
-                 * @type boolean
-                 * @default false
-                 */
-                autoResetDisabled: {
-                    reflectToAttribute: true,
-                    type: Boolean,
-                    value: false
-                },
-
-                /**
-                 * If set to true, the backdrop is transparent.
-                 *
-                 * @attribute backdrop-disabled
-                 * @type boolean
-                 * @default false
-                 */
-                backdropDisabled: {
-                    reflectToAttribute: true,
-                    type: Boolean,
-                    value: false
-                },
-
-                /**
-                 * The paper's background color.
+                 * The dialog's background color.
                  *
                  * @attribute background
                  * @type string
                  */
                 background: {
                     reflectToAttribute: true,
-                    type: Boolean,
-                    value: null
+                    type: Boolean
                 },
 
                 /**
-                 * The element's data.
+                 * The dialog's body.
                  *
-                 * @attribute data
-                 * @type *
+                 * @attribute body
+                 * @type Element
                  * @notifies
+                 * @readonly
                  */
-                data: {
+                body: {
                     notify: true,
-                    value: null
+                    readOnly: true
                 },
 
                 /**
-                 * Used internally as a check if the actions need to be shown or not
+                 * If set to true, there are no actions.
                  *
                  * @attribute empty-actions
                  * @type boolean
@@ -337,23 +227,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                     reflectToAttribute: true,
                     type: Boolean,
                     value: false
-                },
-
-                /**
-                 * If set to true, the label is hidden.
-                 *
-                 * @attribute empty-label
-                 * @type boolean
-                 * @default true
-                 * @notifies
-                 * @readonly
-                 */
-                emptyLabel: {
-                    computed: '_computeEmptyLabel(label)',
-                    notify: true,
-                    reflectToAttribute: true,
-                    type: Boolean,
-                    value: true
                 },
 
                 /**
@@ -377,8 +250,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                  */
                 height: {
                     reflectToAttribute: true,
-                    type: Number,
-                    value: null
+                    type: Number
                 },
 
                 /**
@@ -389,8 +261,7 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                  */
                 label: {
                     reflectToAttribute: true,
-                    type: String,
-                    value: null
+                    type: String
                 },
 
                 /**
@@ -411,21 +282,6 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 },
 
                 /**
-                 * If set to true, the dialog is showed.
-                 *
-                 * @attribute showed
-                 * @type boolean
-                 * @default false
-                 * @notifies
-                 */
-                showed: {
-                    notify: true,
-                    reflectToAttribute: true,
-                    type: Boolean,
-                    value: false
-                },
-
-                /**
                  * The dialog's width. If `0` the dialog will resize itself based on it's content.
                  *
                  * @attribute width
@@ -433,16 +289,23 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                  */
                 width: {
                     reflectToAttribute: true,
+                    type: Number
+                },
+
+                /**
+                 * The dialog's z-axis position.
+                 *
+                 * @attribute z
+                 * @type number
+                 * @default 24
+                 * @notifies
+                 */
+                z: {
+                    notify: true,
+                    reflectToAttribute: true,
                     type: Number,
-                    value: null
+                    value: 24
                 }
-            },
-
-            /*********************************************************************/
-
-            // COMPUTER
-            _computeEmptyLabel: function (label) {
-                return !label;
             },
 
             /*********************************************************************/
@@ -450,14 +313,8 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
             // LISTENER
             attached: function () {
 
-                // Vars
-                var self = this;
-
-                // Mutating
-                self.mutated();
-
                 // Scrolling
-                self.scrolling();
+                this.scrolling();
             },
 
             // LISTENER
@@ -467,13 +324,10 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 var self = this;
 
                 // Finding
-                self.overwrite('actions', XP.getDistributedElements(Polymer.dom(self.$.actionsContent)));
+                self.overwrite('actions', XP.findElements(Polymer.dom(self), '.action'));
 
                 // Setting
                 self._setEmptyActions(!self.actions.length);
-
-                // Observing
-                XP.onMutation(self, self.mutated.bind(self));
             },
 
             // LISTENER
@@ -482,8 +336,11 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 // Vars
                 var self = this;
 
-                // Adapting
-                self._setAdaptee(self.$.matDialogAdaptee);
+                // Setting
+                self._setBody(Polymer.dom(self.root).querySelector('.body'));
+
+                // Observing
+                Polymer.dom(self).observeNodes(self.mutated.bind(self));
             },
 
             // LISTENER
@@ -493,25 +350,10 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
                 var self = this;
 
                 // Setting
-                self._setScrollable(self.$.matDialogBody.clientHeight < self.$.matDialogBody.scrollHeight);
+                self._setScrollable(self.body.clientHeight < self.body.scrollHeight);
 
                 // Observing
                 XP.onMutation(self, self.scrolling.bind(self), {attributes: true, characterData: true, childList: true, subtree: true});
-            },
-
-            /*********************************************************************/
-
-            // HANDLER
-            _handleActivate: function (event) {
-
-                // Vars
-                var self = this;
-
-                // Checking
-                if (!XP.includes(self.actions, event.detail.firer)) { return; }
-
-                // Hiding
-                XP.delay(function () { return !event.defaultPrevented && self.hide(); });
             }
         });
     </script>
