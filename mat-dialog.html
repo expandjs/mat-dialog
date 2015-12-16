@@ -94,16 +94,13 @@ The dialog can also cover the whole screen, creating the illusion of a new page.
         <style include="xp-dialog-styles"></style>
 
         <style>
-            :host .wrapper {
-                @apply(--layout-vertical);
-            }
-
             :host .body {
                 box-sizing: border-box;
                 padding: 24px;
             }
 
             :host(:not([empty-actions])) .body {
+                height: calc(100% - 48px);
                 padding-bottom: 16px;
             }
 
